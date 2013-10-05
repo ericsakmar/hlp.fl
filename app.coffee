@@ -1,19 +1,29 @@
 class Project
   constructor: (@name) ->
     @tasks = []
+    @finished = []
 
-  addTask: (task, isNext) ->
-    if isNext
-      @setNext task
+  @wrap: (rawProject) ->
+    project = null
+    if rawProject?
+      project = new Project(rawProject.name)
+      project.next = rawProject.next
+      project.tasks = rawProject.tasks
+      project.finished = rawProject.finished
+    project
+
+  addTask: (task, isNext) -> if isNext then @setNext task else @tasks.push task
+
+  removeTask: (task) -> 
+    if task == @next
+      @next = null
     else
-      # add to top of array
-      @tasks.splice 0, 0, task
-
+      i = @tasks.indexOf task
+      @tasks.splice i, 1
+    
   setNext: (task) ->
-    # move the old one into the regular array
-    @addTask(@next) if @next?
-
-    # set next
+    @removeTask task
+    @addTask(@next, false) if @next?
     @next = task
 
 class Task
@@ -22,7 +32,7 @@ class Task
 
 @app = angular.module 'app', []
 
-@app.run ['$rootScope', ($rootScope) -> $rootScope.appName = 'hlpr']
+@app.run ['$rootScope', ($rootScope) -> $rootScope.appName = 'hlp.fl']
 
 @app.factory 'Projects', ->
 
@@ -47,7 +57,8 @@ class Task
       db.transaction(["projects"]).objectStore("projects").openCursor().onsuccess = (event) ->
         cursor = event.target.result
         if cursor?
-          projects.push cursor.value
+          project = Project.wrap(cursor.value)
+          projects.push project if project.next? or project.tasks.length > 0
           cursor.continue()
         else
           callback projects
@@ -55,7 +66,7 @@ class Task
   find: (name, callback) ->
     @openDb (db) -> 
       db.transaction(["projects"]).objectStore("projects").get(name).onsuccess = (event) ->
-        callback event.target.result
+        callback Project.wrap(event.target.result)
 
   findOrCreate: (name, callback) -> 
     @find name, (project) ->
@@ -63,8 +74,7 @@ class Task
 
   store: (project, callback) ->
     @openDb (db) ->
-      db.transaction(["projects"], "readwrite").objectStore("projects").add(project).onsuccess = (event) ->
-        console.log event.target.result
+      db.transaction(["projects"], "readwrite").objectStore("projects").put(project).onsuccess = (event) ->
         callback project
   
 
@@ -76,8 +86,7 @@ class Task
         $scope.projects = projects
 
   refreshProjects()
-  $scope.newTask = '@test new task'
-
+  
   $scope.createTask = -> 
     # get or create project
     projectName = parseProjectName $scope.newTask
@@ -90,11 +99,26 @@ class Task
       isNext = parseIsNext $scope.newTask
       project.addTask task, isNext
 
-      Projects.store(project, (project) -> refreshProjects())
+      Projects.store project, (project) -> 
+        refreshProjects()
+        $scope.newTask = null
   
-  parseProjectName = (rawTask) -> /^\@[\w>\-]+/.exec(rawTask)[0]
+  parseProjectName = (rawTask) -> /^\@[\w>\-\.]+/.exec(rawTask)[0]
 
   parseTaskName = (rawTask) -> /\s[\w\s]+!?$/.exec(rawTask)[0].replace(/(^\s)|(!$)/g, '')
 
   parseIsNext = (rawTask) -> rawTask.indexOf('!') == rawTask.length - 1
+
+  $scope.markDone = (project, task) ->
+    project.finished.push task
+    project.removeTask task
+    Projects.store project, (project) -> refreshProjects()
+
+  $scope.markNext = (project, task) ->
+    project.setNext task
+    Projects.store project, (project) -> refreshProjects()
+
+  $scope.deleteTask = (project, task) ->
+    project.removeTask task
+    Projects.store project, (project) -> refreshProjects()    
 ]

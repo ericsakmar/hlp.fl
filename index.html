@@ -9,7 +9,10 @@
 
 <body>
   <header>
-    <h1>{{appName}}</h1>
+    <hgroup>
+      <h1>{{appName}}</h1>
+      <h2>a helpful list</h2>
+    </hgroup>
   </header>
 
   <section ng-controller="TaskListController">
@@ -21,11 +24,10 @@
       <li ng-repeat="project in projects">
         <div class="project-name">{{project.name}}</div>
         <ul class="task-list">
-          <li ng-show="project.next != null"><input type="checkbox" /><span class="next">NEXT</span>{{project.next.name}}</li>
-          <li ng-repeat="task in project.tasks">
-            <input type="checkbox" />
-            {{task.name}}
-            <div class="actions"><a href="#" class="danger">delete</a> <a href="#">mark as next</a></div>
+          <li ng-show="project.next != null">
+            <input type="checkbox" ng-click="markDone(project, project.next)"/><span class="next">NEXT</span>{{project.next.name}}<div class="actions"><a ng-click="deleteTask(project, project.next)" class="danger">delete</a></div>
+          </li>
+          <li ng-repeat="task in project.tasks"><input type="checkbox" ng-click="markDone(project, task)"/>{{task.name}}<div class="actions"><a ng-click="deleteTask(project, task)" class="danger">delete</a> <a ng-click="markNext(project, task)">mark as next</a></div>
           </li>
       </li>
     </ul>

@@ -12,6 +12,8 @@
 @titleFont: Futura, "Trebuchet MS", Arial, sans-serif;
 @slabFont: "Arial Black", "Arial Bold", Gadget, sans-serif;
 
+@width: 600px;
+
 body {
   background: @light;
   font-family: @textFont;
@@ -20,7 +22,6 @@ body {
 
 header {
   background: @color1;
-  text-align: center;
   padding-top: @bigFont * 0.66;
 }
 
@@ -29,14 +30,29 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
 }
 
+hgroup {
+  width: @width;
+  margin: 0 auto;
+}
+
 h1 {
   font-size: @bigFont;
+}
+
+h2 {
+  text-align: right;
+  margin-top: -27px;
 }
 
 a {
   color: @lightAccent;
   text-decoration: none;
   font-family: sans-serif;
+
+  font-size: 14px;
+  font-family: @slabFont;
+  padding: 0 4px;
+  text-transform: uppercase;
 }
 
 a.danger {
@@ -77,9 +93,11 @@ a.danger {
   }
 
   input[type="checkbox"] {
-    margin: 0 4px 0 0;
+    margin: 0 6px 0 0;
   }
+}
 
+.task-list {
   .actions {
     float: right;
     opacity: 0;
@@ -97,11 +115,6 @@ a.danger {
 .next {
   font-size: 14px;
   font-family: @slabFont;
-  color: darken(@color1, 45%);
-
-  background: @color1;
-  border: 1px solid darken(@color1, 9%);
-  border-radius: 3px;
-  padding: 0 4px;
-  margin: 0 6px 0 0;
+  color: @color1;
+  padding: 0 4px 0 0;
 }

@@ -5,7 +5,6 @@ body {
 }
 header {
   background: #a6cf72;
-  text-align: center;
   padding-top: 47.52px;
 }
 h1,
@@ -17,13 +16,25 @@ h6 {
   font-family: Futura, "Trebuchet MS", Arial, sans-serif;
   font-weight: normal;
 }
+hgroup {
+  width: 600px;
+  margin: 0 auto;
+}
 h1 {
   font-size: 72px;
+}
+h2 {
+  text-align: right;
+  margin-top: -27px;
 }
 a {
   color: #60b9e8;
   text-decoration: none;
   font-family: sans-serif;
+  font-size: 14px;
+  font-family: "Arial Black", "Arial Bold", Gadget, sans-serif;
+  padding: 0 4px;
+  text-transform: uppercase;
 }
 a.danger {
   color: #fc4349;
@@ -56,25 +67,21 @@ a.danger {
   border-radius: 6px;
 }
 .project-list input[type="checkbox"] {
-  margin: 0 4px 0 0;
+  margin: 0 6px 0 0;
 }
-.project-list .actions {
+.task-list .actions {
   float: right;
   opacity: 0;
   -webkit-transition: opacity 0.2s ease-in-out;
   -moz-transition: opacity 0.2s ease-in-out;
   transition: opacity 0.2s ease-in-out;
 }
-.project-list > li:hover .actions {
+.task-list > li:hover .actions {
   opacity: 1;
 }
 .next {
   font-size: 14px;
   font-family: "Arial Black", "Arial Bold", Gadget, sans-serif;
-  color: #304417;
-  background: #a6cf72;
-  border: 1px solid #90c350;
-  border-radius: 3px;
-  padding: 0 4px;
-  margin: 0 6px 0 0;
+  color: #a6cf72;
+  padding: 0 4px 0 0;
 }

@@ -1,0 +1,46 @@
+@color1: #A6CF72;
+@light: #efefef;
+@dark: #4D4740;
+@darkAccent: #173F54;
+@lightAccent: #60B9E8;
+
+@bigFont: 72px;
+@medFont: 48px;
+
+body {
+  background: @light;
+  font: "Lucida Grande";
+  font-size: 18px;
+}
+
+header {
+  background: @color1;
+  text-align: center;
+  padding-top: @bigFont * 0.66;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif; 
+  font-weight: normal;
+}
+
+h1 {
+  font-size: @bigFont;
+}
+
+#task-form {
+  background: @lightAccent;
+  text-align: center;
+  padding: 16px;
+  border-top: 1px solid darken(@lightAccent, 9%);
+  border-bottom: 1px solid darken(@lightAccent, 9%);
+
+  input {
+    font-size: @medFont;
+    font-family: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;
+    width: 600px;
+    border: 1px solid darken(@lightAccent, 9%);
+    border-radius: 6px;
+    padding: 8px;
+  }
+}

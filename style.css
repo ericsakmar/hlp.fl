@@ -1,0 +1,37 @@
+body {
+  background: #efefef;
+  font: "Lucida Grande";
+  font-size: 18px;
+}
+header {
+  background: #a6cf72;
+  text-align: center;
+  padding-top: 47.52px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+  font-weight: normal;
+}
+h1 {
+  font-size: 72px;
+}
+#task-form {
+  background: #60b9e8;
+  text-align: center;
+  padding: 16px;
+  border-top: 1px solid #38a7e2;
+  border-bottom: 1px solid #38a7e2;
+}
+#task-form input {
+  font-size: 48px;
+  font-family: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;
+  width: 600px;
+  border: 1px solid #38a7e2;
+  border-radius: 6px;
+  padding: 8px;
+}

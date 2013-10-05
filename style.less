@@ -3,14 +3,19 @@
 @dark: #4D4740;
 @darkAccent: #173F54;
 @lightAccent: #60B9E8;
+@dangerColor: #FC4349;
 
 @bigFont: 72px;
 @medFont: 48px;
 
+@textFont: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;
+@titleFont: Futura, "Trebuchet MS", Arial, sans-serif;
+@slabFont: "Arial Black", "Arial Bold", Gadget, sans-serif;
+
 body {
   background: @light;
-  font: "Lucida Grande";
-  font-size: 18px;
+  font-family: @textFont;
+  font-size: 21px;
 }
 
 header {
@@ -20,12 +25,22 @@ header {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: Futura, "Trebuchet MS", Arial, sans-serif; 
+  font-family: @titleFont;
   font-weight: normal;
 }
 
 h1 {
   font-size: @bigFont;
+}
+
+a {
+  color: @lightAccent;
+  text-decoration: none;
+  font-family: sans-serif;
+}
+
+a.danger {
+  color: @dangerColor;
 }
 
 #task-form {
@@ -37,10 +52,56 @@ h1 {
 
   input {
     font-size: @medFont;
-    font-family: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;
+    font-family: @textFont;
     width: 600px;
     border: 1px solid darken(@lightAccent, 9%);
     border-radius: 6px;
     padding: 8px;
   }
+}
+
+.project-list {
+  
+  .project-name {
+    font-family: @titleFont;
+    padding: 0 0 8px 0;
+  }
+
+  >li {
+    background: #fff;
+    width: 600px;
+    margin: 16px auto;
+    padding: 8px;
+    border: 1px solid darken(@light, 9%);
+    border-radius: 6px;
+  }
+
+  input[type="checkbox"] {
+    margin: 0 4px 0 0;
+  }
+
+  .actions {
+    float: right;
+    opacity: 0;
+
+    -webkit-transition: opacity 0.2s ease-in-out;
+    -moz-transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  > li:hover .actions {
+    opacity: 1;
+  }
+}
+
+.next {
+  font-size: 14px;
+  font-family: @slabFont;
+  color: darken(@color1, 45%);
+
+  background: @color1;
+  border: 1px solid darken(@color1, 9%);
+  border-radius: 3px;
+  padding: 0 4px;
+  margin: 0 6px 0 0;
 }

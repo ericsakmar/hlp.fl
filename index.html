@@ -16,6 +16,19 @@
     <form id="task-form" ng-submit="createTask()">
       <input ng-model="newTask" type="text" placeholder="@project do something" />
     </form>
+
+    <ul class="project-list">
+      <li ng-repeat="project in projects">
+        <div class="project-name">{{project.name}}</div>
+        <ul class="task-list">
+          <li ng-show="project.next != null"><input type="checkbox" /><span class="next">NEXT</span>{{project.next.name}}</li>
+          <li ng-repeat="task in project.tasks">
+            <input type="checkbox" />
+            {{task.name}}
+            <div class="actions"><a href="#" class="danger">delete</a> <a href="#">mark as next</a></div>
+          </li>
+      </li>
+    </ul>
   </section>
 
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>

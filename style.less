@@ -53,6 +53,8 @@ a {
   font-family: @slabFont;
   padding: 0 4px;
   text-transform: uppercase;
+
+  cursor: pointer;
 }
 
 a.danger {
@@ -78,22 +80,24 @@ a.danger {
 
 .project-list {
   
+  background: #fff;
+  width: 600px;
+  margin: 16px auto;
+  padding: 8px;
+  border: 1px solid darken(@light, 9%);
+  border-radius: 6px; 
+
   .project-name {
     font-family: @titleFont;
-    padding: 0 0 8px 0;
-  }
-
-  >li {
-    background: #fff;
-    width: 600px;
-    margin: 16px auto;
-    padding: 8px;
-    border: 1px solid darken(@light, 9%);
-    border-radius: 6px;
+    padding: 0 0 4px 0;
   }
 
   input[type="checkbox"] {
     margin: 0 6px 0 0;
+  }
+
+  > li:not(:first-child) {
+    margin: 16px 0 0 0;
   }
 }
 

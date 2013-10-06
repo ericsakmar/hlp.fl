@@ -20,8 +20,8 @@
       <input ng-model="newTask" type="text" placeholder="@project do something" />
     </form>
 
-    <ul class="project-list">
-      <li ng-repeat="project in projects">
+    <ul class="project-list" ng-repeat="group in projectGroups">
+      <li ng-repeat="project in group">
         <div class="project-name">{{project.name}}</div>
         <ul class="task-list">
           <li ng-show="project.next != null">

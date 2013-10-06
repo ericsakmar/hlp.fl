@@ -22,9 +22,19 @@ class Project
       @tasks.splice i, 1
     
   setNext: (task) ->
-    @removeTask task
+    # add the current next task to the list of tasks
     @addTask(@next, false) if @next?
+
+    # set next
     @next = task
+
+    # if the task was already in the list, remove it
+    i = @tasks.indexOf task
+    @tasks.splice(i, 1) if i != -1
+
+  parentName: ->
+    i = @name.indexOf '>'
+    if i == -1 then @name else @name.substring 0, i
 
 class Task
   constructor: (@name) ->
@@ -82,8 +92,31 @@ class Task
 
   refreshProjects = -> 
     Projects.findAll (projects) -> 
+      sorted = projects.sort (left, right) -> 
+        console.log left.parentName(), right.parentName()
+        if (left.parentName() < right.parentName())
+          -1
+        else if (left.parentName() > right.parentName()) 
+          1
+        else 
+          0
+
+      groups = []
+      group = []
+      parent = null
+      for project in sorted
+        if parent? and parent.name == project.parentName()
+          group.push project
+        else
+          # this is the parent
+          parent = project
+          group = []
+          group.push parent
+          groups.push group
+
       $scope.$apply ->
         $scope.projects = projects
+        $scope.projectGroups = groups
 
   refreshProjects()
   
@@ -102,10 +135,10 @@ class Task
       Projects.store project, (project) -> 
         refreshProjects()
         $scope.newTask = null
-  
+
   parseProjectName = (rawTask) -> /^\@[\w>\-\.]+/.exec(rawTask)[0]
 
-  parseTaskName = (rawTask) -> /\s[\w\s]+!?$/.exec(rawTask)[0].replace(/(^\s)|(!$)/g, '')
+  parseTaskName = (rawTask) -> /\s.+!?$/.exec(rawTask)[0].replace(/(^\s)|(!$)/g, '')
 
   parseIsNext = (rawTask) -> rawTask.indexOf('!') == rawTask.length - 1
 

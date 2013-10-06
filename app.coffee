@@ -93,7 +93,6 @@ class Task
   refreshProjects = -> 
     Projects.findAll (projects) -> 
       sorted = projects.sort (left, right) -> 
-        console.log left.parentName(), right.parentName()
         if (left.parentName() < right.parentName())
           -1
         else if (left.parentName() > right.parentName()) 
